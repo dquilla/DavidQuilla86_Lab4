@@ -1,0 +1,99 @@
+  .commentsWrapper
+  {
+    width: 750px
+    border: 1px solid #a1a1a1
+    margin: 10px auto 10px auto;
+    height: 600px
+  }
+  .comments
+  {
+    margin: 10px;
+    border: 1px solid #e1e1e1
+    height: auto;
+    width: auto;
+
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+  }
+  nav {
+    background: #2daae1;
+    overflow: hidden;
+  }
+  .header {
+    float: left;
+    color: #fff;
+    padding: 15px;
+    overflow: hidden;
+  }
+  .logo {
+    font-size: 24px;
+  }
+  .handle {
+    float: right;
+    background: #fff;
+    color: #2daae1;
+    border: none;
+    font-size: 18px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    display: none;
+  }
+  nav a {
+    text-decoration: none;
+    color: inherit;
+  }
+  nav ul {
+    overflow: hidden;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    transition: max-height 0.5s;
+    -webkit-transition: max-height 0.5s;
+    -ms-transition: max-height 0.5s;
+    -moz-transition: max-height 0.5s;
+    -o-transition: max-height 0.5s;
+  }
+  nav ul li {
+    float: right;
+    display: inline-block;
+    padding: 20px;
+  }
+  nav ul li:hover {
+    background-color: #208ebf;
+  }
+  section {
+    box-sizing: border-box;
+    line-height: 1.5em;
+    width: 70%;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  @media screen and (max-width: 767px) {
+    .header {
+      float: none;
+    }
+    nav ul {
+      background: #4fc2f4;
+      max-height: 0;
+      width: 100%;
+    }
+    nav ul.show {
+      max-height: 20em;
+    }
+    nav ul li {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 15px;
+    }
+    .handle {
+      display: inline;
+    }
+    section {
+      width: 100%;
+    }
+  }
