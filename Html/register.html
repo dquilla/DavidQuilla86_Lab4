@@ -25,7 +25,7 @@
 
     <nav>
       <div class="header">
-        <a class="logo">Laboratory 4</a>
+        <a class="logo">Laboratory 5</a>
         <button class="handle">
           <i class="fa fa-bars"></i>
         </button>
@@ -94,13 +94,13 @@
 
               $.ajax({
                 type: "POST",
-                url: "/DavidQuilla86_Lab4/Data/applicationLayer.php",
+                url: "../Data/applicationLayer.php",
                 dataType: "json",
                 data: jsonObject,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 
                 success: function(jsonData) {
-                  window.location.replace("/DavidQuilla86_Lab4/Html/login.html");
+                  window.location.replace("login.html");
                 },
                 error: function(errorMsg){
                   alert(errorMsg.statusText);
@@ -117,7 +117,7 @@
       });
 
       $("#cancelButton").on("click", function(){
-        window.location.replace("/DavidQuilla86_Lab4/Html/index.html");
+        window.location.replace("index.html");
       });
 
     });

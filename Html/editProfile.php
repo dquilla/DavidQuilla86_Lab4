@@ -28,16 +28,16 @@
 
     <nav>
       <div class="header">
-        <a class="logo">Laboratory 4</a>
+        <a class="logo">Laboratory 5</a>
         <button class="handle">
           <i class="fa fa-bars"></i>
         </button>
       </div>
       <ul>
-        <li><a href="home.html">Home</a></li>
+        <li><a href="home.php">Home</a></li>
         <li><a href="profile.php">Profile of <?php echo $_SESSION['userName']; ?></a></li>
         <li><a href="editProfile.php">Edit Profile</a></li>
-        <li><a href="login.html">Logout</a></li>
+        <li><a id="logoutSess" href="#">Logout</a></li>
       </ul>
 
     </nav>
@@ -75,6 +75,29 @@
   </body>
   <script type="text/javascript">
     $( document ).on('ready', function() {
+
+      var jsonObject = {
+          "action" : "CHECK_SESSION"
+      };
+
+      $.ajax({
+          type: "POST",
+          url: "../Data/applicationLayer.php",
+          dataType: "json",
+          data: jsonObject,
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          success: function(jsonData) {
+
+          },
+          error: function(errorMsg){
+              //alert(errorMsg.status);
+              window.location.replace("login.html");
+          }
+      });
+
+
+
+
       $("#saveChangesButton").on("click", function(){
         var password1 = $('#password1').val();
         var password2 = $('#password2').val();
@@ -98,15 +121,16 @@
 
               $.ajax({
                 type: "POST",
-                url: "/DavidQuilla86_Lab4/Data/applicationLayer.php",
+                url: "../Data/applicationLayer.php",
                 dataType: "json",
                 data: jsonObject,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 
                 success: function(jsonData) {
-                  window.location.replace("/DavidQuilla86_Lab4/Html/profile.php");
+                  window.location.replace("profile.php");
                 },
                 error: function(errorMsg){
+
                   alert(errorMsg.statusText);
                 }
               });
@@ -121,9 +145,26 @@
       });
 
       $("#cancelButton").on("click", function(){
-        window.location.replace("/DavidQuilla86_Lab4/Html/profile.php");
+        window.location.replace("profile.php");
       });
 
+    });
+    $("#logoutSess").on("click",function(){
+        var jsonObject = { "action" : "LOGOUT" };
+        $.ajax({
+            type: "POST",
+            url: "../Data/applicationLayer.php",
+            dataType: "json",
+            data: jsonObject,
+            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+            success: function (jsonData) {
+                window.location.replace("login.html");
+            },
+            error: function (errorMsg) {
+                alert(errorMsg.message);
+
+            }
+        });
     });
   </script>
 

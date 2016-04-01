@@ -1,7 +1,7 @@
+
 <?php
   session_start();
 ?>
-
 <!DOCTYPE html>
 <html>
 
@@ -28,7 +28,7 @@
 
     <nav>
       <div class="header">
-        <a class="logo">Laboratory 4</a>
+        <a class="logo">Laboratory 5</a>
         <button class="handle">
           <i class="fa fa-bars"></i>
         </button>
@@ -36,7 +36,7 @@
       <ul>
         <li><a href="home.php">Home</a></li>
         <li><a href="profile.php">Profile of <?php echo $_SESSION['userName']; ?></a></li>
-        <li><a href="login.html">Logout</a></li>
+        <li><a id="logoutSess" href="#">Logout</a></li>
       </ul>
 
     </nav>
@@ -70,7 +70,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/DavidQuilla86_Lab4/Data/applicationLayer.php",
+            url: "../Data/applicationLayer.php",
             dataType: "json",
             data: jsonObject,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -81,9 +81,31 @@
               });
             },
             error: function(errorMsg){
+              //alert(errorMsg.status);
+              if (errorMsg.status == 200) {
+                  window.location.replace("login.html");
+              } else {
                 alert("There are no comments");
+              }
             }
         });
+      });
+      $("#logoutSess").on("click",function(){
+          var jsonObject = { "action" : "LOGOUT" };
+          $.ajax({
+              type: "POST",
+              url: "../Data/applicationLayer.php",
+              dataType: "json",
+              data: jsonObject,
+              headers: {"Content-Type": "application/x-www-form-urlencoded"},
+              success: function (jsonData) {
+                  window.location.replace("login.html");
+              },
+              error: function (errorMsg) {
+                  alert(errorMsg.message);
+
+              }
+          });
       });
 
       $("#commentField").on("submit", function(x){
@@ -94,7 +116,7 @@
         };
         $.ajax({
           type: "POST",
-          url: "/DavidQuilla86_Lab4/Data/applicationLayer.php",
+          url: "../Data/applicationLayer.php",
           dataType: "json",
           data: jsonObject,
           headers: {'Content-Type': 'application/x-www-form-urlencoded'},

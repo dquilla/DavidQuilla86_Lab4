@@ -134,6 +134,7 @@
       {
         session_start();
         $userName = $_SESSION['userName'];
+
         $sql = "UPDATE users SET fName='$userFirstName', lName='$userLastName', userMail='$userMail', passwrd='$userPassword' WHERE userName='$userName'";
         if (mysqli_query($conn, $sql)) {
           $response = array("message" => "OK");
@@ -187,7 +188,7 @@
         $sql = "SELECT * FROM posts WHERE userName='$userName'";
         $result = $conn->query($sql);
 
-        if ($result->num_rows > 0) {
+        if ($result->num_rows >= 0) {
             $response = array("message" => "OK");
             while ($row = $result->fetch_assoc()) {
                $response[] = $row;
@@ -209,10 +210,14 @@
       $conn = connect();
       if ($conn != null)
       {
+
+        session_start();
+        $userName = $_SESSION['userName'];
+
         $sql = "SELECT * FROM posts";
         $result = $conn->query($sql);
 
-        if ($result->num_rows > 0) {
+        if ($result->num_rows >= 0) {
             $response = array("message" => "OK");
             while ($row = $result->fetch_assoc()) {
                $response[] = $row;

@@ -19,7 +19,7 @@
 
     <nav>
       <div class="header">
-        <a class="logo">Laboratory 4</a>
+        <a class="logo">Laboratory 5</a>
         <button class="handle">
           <i class="fa fa-bars"></i>
         </button>
@@ -32,7 +32,7 @@
 
     <section id="content">
 
-      <form>
+      <form id="loginForm">
         <fieldset>
           <legend>Login</legend>
           <label for="userName">User</label><br>
@@ -50,41 +50,66 @@
   </body>
 
   <script type="text/javascript">
-      $( document ).on('ready', function() {
+    $(document).ready(function() {
 
         $('.handle').on('click', function(){
           $('nav ul').toggleClass('show');
         });
 
-        var jsonObject = {"action" : "GET_POSTS"};
+        var jsonObject = {
+            "action" : "CHECK_SESSION"
+        };
 
-         $("#loginButton").on("click", function(){
-              var jsonObject = {
-                  "userName" : $("#userName").val(),
-                  "userPassword" : $("#password1").val(),
-                  "action" : "LOGIN"
-              };
+        $.ajax({
+            type: "POST",
+            url: "../Data/applicationLayer.php",
+            dataType: "json",
+            data: jsonObject,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            success: function(jsonData) {
+              if (jsonData['activeSession']) {
+                  window.location.replace("profile.php");
+              } else if (jsonData['userName']) {
+                  $("#userName").val(jsonData['userName']);
+              } else {
+                  $("#userName").val("");
+              }
 
-              $.ajax({
-                  type: "POST",
-                  url: "/DavidQuilla86_Lab4/Data/applicationLayer.php",
-                  dataType: "json",
-                  data: jsonObject,
-                  headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                  success: function(jsonData) {
-                    alert("Welcome " + jsonData.fName + " " + jsonData.lName);
-                    window.location.replace("/DavidQuilla86_Lab4/Html/profile.php");
+            },
+            error: function(errorMsg){
+                //alert(errorMsg.statusText);
+            }
+        });
 
-                  },
-                  error: function(errorMsg){
-                      alert(errorMsg.statusText);
-                  }
-              });
-         });
-
-          $("#registerButton").on("click",function(){
-              window.location.replace("/DavidQuilla86_Lab4/Html/register.html");
-          });
       });
+
+      $("#loginButton").on("click", function(e){
+        e.preventDefault();
+           var jsonObject = {
+               "userName" : $("#userName").val(),
+               "userPassword" : $("#password1").val(),
+               "action" : "LOGIN"
+           };
+
+           $.ajax({
+               type: "POST",
+               url: "../Data/applicationLayer.php",
+               dataType: "json",
+               data: jsonObject,
+               headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+               success: function(jsonData) {
+                 alert("Welcome " + jsonData.fName + " " + jsonData.lName);
+                 window.location.replace("profile.php");
+
+               },
+               error: function(errorMsg){
+                   alert(errorMsg.statusText);
+               }
+           });
+      });
+
+       $("#registerButton").on("click",function(){
+           window.location.replace("register.html");
+       });
   </script>
 </html>
